@@ -1,0 +1,49 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+// #include <cctype> has been removed since we no longer need isdigit()
+
+using namespace std;
+
+int main() {
+   string line, word;
+
+    cout << "Enter your C++ code (Press Ctrl+Z on Windows or Ctrl+D on Mac/Linux to stop): " << endl;
+
+    // Takes input from the user line by line instead of reading a file
+    while (getline(cin, line)) {
+        stringstream ss(line);
+        
+        // ... (the rest of your inside loop stays exactly the same)
+
+        while (ss >> word) {
+
+            // Keyword (Replaced the isKeyword function with a direct check)
+            if (word == "int" || word == "main" || word == "return" || word == "cout")
+                cout << word << " - Keyword" << endl;
+
+            // Operator
+            else if (word == "=" || word == "<<" || word == "+" || word == "-")
+                cout << word << " - Operator" << endl;
+
+            // Number (Replaced the built-in isdigit() with a manual ASCII check)
+            else if (word[0] >= '0' && word[0] <= '9')
+                cout << word << " - Number" << endl;
+
+            // String literal
+            else if (word[0] == '"')
+                cout << word << " - String" << endl;
+
+            // Identifier
+            else
+                cout << word << " - Identifier" << endl;
+        }
+
+        // Check punctuation separately
+        for (char ch : line) {
+            if (ch == '(' || ch == ')' || ch == '{' || ch == '}' || ch == ';')
+                cout << ch << " - Punctuation" << endl;
+        }
+    }
+
+}
